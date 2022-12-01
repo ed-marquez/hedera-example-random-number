@@ -45,9 +45,7 @@ async function main() {
 	console.log(`\n- Contract ID: ${contractId}`);
 	console.log(`- Contract ID in Solidity address format: ${contractAddress}`);
 
-	// console.log(`- Treasury approving fungible token allowance for Alice...\n`);
-
-	const rnParams = new ContractFunctionParameters().addUint32(1).addUint32(10);
+	const rnParams = new ContractFunctionParameters().addUint32(75).addUint32(100);
 	const mintFtRec = await contracts.executeContractFcn(contractId, "getPseudorandomNumber", rnParams, gasLim, client);
 	console.log(`- Contract call for random number: ${mintFtRec.receipt.status} \n`);
 
@@ -55,7 +53,7 @@ async function main() {
 
 	const numberResult = await contracts.callContractFcn(contractId, "getNumber", gasLim, client);
 	console.log(`- Random number: ${numberResult.getUint32(0)} \n`);
-	console.log(`- Random number2: ${recQuery.children[0].prngBytes.readUint32BE(28)} \n`);
+	console.log(`- Random number2: ${recQuery.contractFunctionResult.bytes[31]} \n`);
 
 	const [mintFtInfo, mintExpUrl] = await queries.mirrorTxQueryFcn(mintFtRec.transactionId);
 	console.log(`- See details: ${mintExpUrl}`);

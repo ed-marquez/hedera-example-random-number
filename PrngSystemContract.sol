@@ -26,7 +26,8 @@ contract PrngSystemContract {
         assembly {
             choice := mload(add(result, 0x20))
         }
-        a = choice;
+        a = lo + (choice % (hi - lo));
+        // return lo + (choice % (hi - lo));
         return lo + (choice % (hi - lo));
     }
 
