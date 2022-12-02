@@ -61,6 +61,7 @@ async function main() {
 	console.log(`- The random number (using contract function) = ${randNumResult.getUint32(0)}`);
 	randNum === randNumResult.getUint32(0) ? console.log(`- The random number checks out ✅`) : console.log(`- Random number doesn't match ❌`);
 
+	// Check a Mirror Node Explorer
 	const [randNumInfo, randNumExpUrl] = await queries.mirrorTxQueryFcn(randNumRec.transactionId);
 	console.log(`\n- See details in mirror node explorer: \n${randNumExpUrl}`);
 
