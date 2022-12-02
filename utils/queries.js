@@ -36,8 +36,10 @@ export async function mirrorTxQueryFcn(txIdRaw) {
 	const txIdPretty = prettify(txIdRaw.toString());
 	const mirrorNodeExplorerUrl = `https://hashscan.io/testnet/transaction/${txIdPretty}`;
 	const mirrorNodeRestApi = `https://testnet.mirrornode.hedera.com/api/v1/transactions/${txIdPretty}`;
-	const mQuery = await axios.get(mirrorNodeRestApi);
-
+	let mQuery = [];
+	try {
+		mQuery = await axios.get(mirrorNodeRestApi);
+	} catch {}
 	return [mQuery, mirrorNodeExplorerUrl];
 }
 

@@ -5,8 +5,7 @@ import "./IPrngSystemContract.sol";
 
 contract PrngSystemContract {
     address constant PRECOMPILE_ADDRESS = address(0x169);
-
-    uint32 a;
+    uint32 randNum;
 
     function getPseudorandomSeed() external returns (bytes32 randomBytes) {
         (bool success, bytes memory result) = PRECOMPILE_ADDRESS.call(
@@ -26,12 +25,11 @@ contract PrngSystemContract {
         assembly {
             choice := mload(add(result, 0x20))
         }
-        a = lo + (choice % (hi - lo));
-        // return lo + (choice % (hi - lo));
-        return lo + (choice % (hi - lo));
+        randNum = lo + (choice % (hi - lo));
+        return randNum;
     }
 
     function getNumber() public view returns (uint32) {
-        return a;
+        return randNum;
     }
 }
