@@ -34,7 +34,7 @@ async function main() {
 	console.log(`\nSTEP 2 ===================================\n`);
 	console.log(`- Generating random number with Solidity...\n`);
 
-	// // Deploy the Solidity contract
+	// Deploy the Solidity contract
 	let gasLim = 4000000;
 	const bytecode = contract.object;
 	const [contractId, contractAddress] = await contracts.deployContractFcn(bytecode, gasLim, client);
