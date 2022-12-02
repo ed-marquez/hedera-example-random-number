@@ -6,7 +6,7 @@ dotenv.config();
 
 import * as queries from "./utils/queries.js";
 import * as contracts from "./utils/contractOperations.js";
-import contract from "./PrngSystemContract.json" assert { type: "json" };
+import contract from "./contracts/PrngSystemContract.json" assert { type: "json" };
 
 const operatorId = AccountId.fromString(process.env.OPERATOR_ID);
 const operatorKey = PrivateKey.fromString(process.env.OPERATOR_PVKEY);
