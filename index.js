@@ -10,7 +10,8 @@ import contract from "./contracts/PrngSystemContract.json" assert { type: "json"
 
 const operatorId = AccountId.fromString(process.env.OPERATOR_ID);
 const operatorKey = PrivateKey.fromString(process.env.OPERATOR_PVKEY);
-const client = Client.forTestnet().setOperator(operatorId, operatorKey);
+const network = process.env.HEDERA_NETWORK;
+const client = Client.forNetwork(network).setOperator(operatorId, operatorKey);
 client.setDefaultMaxTransactionFee(new Hbar(100));
 client.setMaxQueryPayment(new Hbar(50));
 
@@ -62,7 +63,7 @@ async function main() {
 	randNum === randNumResult.getUint32(0) ? console.log(`- The random number checks out ✅`) : console.log(`- Random number doesn't match ❌`);
 
 	// Check a Mirror Node Explorer
-	const [randNumInfo, randNumExpUrl] = await queries.mirrorTxQueryFcn(randNumRec.transactionId);
+	const [randNumInfo, randNumExpUrl] = await queries.mirrorTxQueryFcn(randNumRec, network);
 	console.log(`\n- See details in mirror node explorer: \n${randNumExpUrl}`);
 
 	console.log(`

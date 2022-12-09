@@ -28,14 +28,16 @@ export async function balanceCheckerFcn(acId, tkId, client) {
 	}
 }
 
-export async function mirrorTxQueryFcn(txIdRaw) {
+export async function mirrorTxQueryFcn(txRec, network) {
 	// Query a mirror node for information about the transaction
 	const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-	await delay(10000); // Wait for 10 seconds before querying a mirror node
+	await delay(10000); // Wait for 10 seconds before querying a mirror node to allow for info propagation
 
+	const txTimestamp = txRec.consensusTimestamp;
+	const txIdRaw = txRec.transactionId;
 	const txIdPretty = prettify(txIdRaw.toString());
-	const mirrorNodeExplorerUrl = `https://hashscan.io/testnet/transaction/${txIdPretty}`;
-	const mirrorNodeRestApi = `https://testnet.mirrornode.hedera.com/api/v1/transactions/${txIdPretty}`;
+	const mirrorNodeExplorerUrl = `https://hashscan.io/${network}/transaction/${txTimestamp}?tid=${txIdPretty}`;
+	const mirrorNodeRestApi = `https://${network}.mirrornode.hedera.com/api/v1/transactions/${txIdPretty}`;
 	let mQuery = [];
 	try {
 		mQuery = await axios.get(mirrorNodeRestApi);
